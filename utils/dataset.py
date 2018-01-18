@@ -122,10 +122,10 @@ def GetmindR(coll1,coll2):
 
 
 def compute_manydR(c):
-    dRmj=GetmindR_class(c['muonCollection']     , c['jetCollection'])
-    dRjj=GetmindR_class(c['jetCollection']      , c['jetCollection'])
-    dRej=GetmindR_class(c['electronCollection'] , c['jetCollection'])
-    dRee=GetmindR_class(c['electronCollection'] , c['electronCollection'])
+    dRmj=GetmindR(c['muonCollection']     , c['jetCollection'])
+    dRjj=GetmindR(c['jetCollection']      , c['jetCollection'])
+    dRej=GetmindR(c['electronCollection'] , c['jetCollection'])
+    dRee=GetmindR(c['electronCollection'] , c['electronCollection'])
     return dRmj,dRjj,dRej,dRee
 
 
