@@ -130,7 +130,7 @@ def compute_manydR(c):
 
 
 def get_data():
-    data = pd.DataFrame( root2array('VectorNtuple_4topSM.root', 'nominal_Loose').view(np.recarray) )
+    data = pd.DataFrame( root2array('../VectorNtuple_4topSM.root', 'nominal_Loose').view(np.recarray) )
     add_objectCollection(Jet     ,['jet_pt','jet_eta','jet_phi'], 'jetCollection'     , data)
     add_objectCollection(Muon    ,['mu_pt' ,'mu_eta' ,'mu_phi' ], 'muonCollection'    , data)
     add_objectCollection(Electron,['el_pt' ,'el_eta' ,'el_phi' ], 'electronCollection', data)
