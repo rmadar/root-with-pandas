@@ -64,13 +64,13 @@ void ComparisonROOT(bool isPara){
   auto hdRee = d_with_dR.Filter("mindR_ee>0").Histo1D({"h4","h4",100,0,6}, "mindR_ee");
   clock_t t_hist = clock();
 
-  TCanvas *c2 = new TCanvas();
-  c2->cd();
+  TCanvas *c = new TCanvas();
+  c->cd();
   hdRmj->DrawNormalized();
   hdRjj->DrawNormalized("same");
   hdRej->DrawNormalized("same");
   hdRee->DrawNormalized("same");
-  c2->Print("c2.png");
+  c->Print("c2.png");
   clock_t t_draw = clock();
 
   // Timing printing
