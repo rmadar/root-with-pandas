@@ -1,3 +1,13 @@
+/**************************************
+
+For ~20k Evts:
+
+total delta: 3.41159
+  -> loading: 0.007018
+  -> histo  : 2.12634
+  -> drawing: 1.27823
+ *************************************/
+
 
 // ROOT libs
 #include "TTree.h"
@@ -45,7 +55,7 @@ void ComparisonROOT(bool isPara){
   // Load input file
   auto fileName = "../VectorNtuple_4topSM.root";
   auto treeName = "nominal_Loose";
-  ROOT::Experimental::TDataFrame d(treeName, fileName);
+  ROOT::Experimental::TDataFrame d(treeName, fileName, {"mu_eta" ,"jet_eta","mu_phi" ,"jet_phi","el_eta" ,"jet_eta","el_phi" ,"jet_phi"});
   clock_t t_load = clock();
 
   
