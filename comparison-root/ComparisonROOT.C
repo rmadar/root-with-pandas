@@ -11,6 +11,7 @@ total delta: 3.41159
 
 // ROOT libs
 #include "TTree.h"
+#include "TChain.h"
 #include "ROOT/TDataFrame.hxx"
 #include "TFile.h"
 #include "TCanvas.h"
@@ -55,7 +56,11 @@ void ComparisonROOT(bool isPara){
   // Load input file
   auto fileName = "../VectorNtuple_4topSM.root";
   auto treeName = "nominal_Loose";
-  ROOT::Experimental::TDataFrame d(treeName, fileName, {"mu_eta" ,"jet_eta","mu_phi" ,"jet_phi","el_eta" ,"jet_eta","el_phi" ,"jet_phi"});
+
+  int Nfiles=50;
+  TChain chain(treeName);
+  for (int i=0; i<Nfiles; i++) chain.Add(fileName);
+  ROOT::Experimental::TDataFrame d(chain, {"mu_eta" ,"jet_eta","mu_phi" ,"jet_phi","el_eta" ,"jet_eta","el_phi" ,"jet_phi"});
   clock_t t_load = clock();
 
   
@@ -88,6 +93,7 @@ void ComparisonROOT(bool isPara){
   double elapsed_load = double(t_load - t0    ) / CLOCKS_PER_SEC;
   double elapsed_hist = double(t_hist - t_load) / CLOCKS_PER_SEC;
   double elapsed_draw = double(t_draw - t_hist) / CLOCKS_PER_SEC;
+  cout << "  == Nevets: "  << chain.GetEntries() << " ==" << endl;
   cout << "total delta: "  << elapsed_tot  << endl;
   cout << "  -> loading: " << elapsed_load << endl;
   cout << "  -> histo  : " << elapsed_hist << endl;

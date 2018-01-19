@@ -83,10 +83,15 @@ def GetmindR(coll1,coll2):
 t_0 = default_timer()
 
 needed_branches = ['jet_pt','jet_eta','jet_phi','mu_pt' ,'mu_eta' ,'mu_phi','el_pt' ,'el_eta' ,'el_phi' ]
-data = pd.DataFrame( root2array('../VectorNtuple_4topSM.root', 'nominal_Loose', branches=needed_branches).view(np.recarray) )
-add_objectCollection(d.Jet     ,['jet_pt','jet_eta','jet_phi'], 'jetCollection'     , data)
-add_objectCollection(d.Muon    ,['mu_pt' ,'mu_eta' ,'mu_phi' ], 'muonCollection'    , data)
-add_objectCollection(d.Electron,['el_pt' ,'el_eta' ,'el_phi' ], 'electronCollection', data)
+data_array=[]
+Nfiles=5
+for i in range(0,Nfiles):
+    thisdata = pd.DataFrame( root2array('../VectorNtuple_4topSM.root', 'nominal_Loose', branches=needed_branches).view(np.recarray) )
+    add_objectCollection(d.Jet     ,['jet_pt','jet_eta','jet_phi'], 'jetCollection'     , thisdata)
+    add_objectCollection(d.Muon    ,['mu_pt' ,'mu_eta' ,'mu_phi' ], 'muonCollection'    , thisdata)
+    add_objectCollection(d.Electron,['el_pt' ,'el_eta' ,'el_phi' ], 'electronCollection', thisdata)
+    data_array.append(thisdata)
+data=pd.concat(data_array)
 data.info()
 t_load = default_timer()
 
@@ -99,7 +104,6 @@ dRjj = data.apply( lambda r: GetmindR(r['jetCollection']     , r['jetCollection'
 dRej = data.apply( lambda r: GetmindR(r['electronCollection'], r['jetCollection']     ), axis=1)
 dRee = data.apply( lambda r: GetmindR(r['electronCollection'], r['electronCollection']), axis=1)
 t_dR = default_timer()
-
 
 # ===========
 # 3. Plot it
@@ -115,15 +119,16 @@ plt.ylabel('PDF')
 plt.yscale('log', nonposy='clip')
 plt.legend()
 plt.tight_layout()
-#plt.show()
+plt.savefig('dR.png')
 t_plot = default_timer()
 
 
 # ===============
 # 4. Print result
 # ===============
-print( '\nTotal delta              : {:.2f}s'.format(t_plot-t_0) )
-print( ' --> loading               : {:.2f}s'.format(t_load-t_0) )
-print( ' --> histo                 : not-defined'                )
-print( ' --> plotting and selection: {:.2f}s'.format(t_plot-t_load) )
+print( '\nTotal Number of events     : {:.0f}'.format(len(data)) )
+print( 'Total delta                : {:.2f}s'  .format(t_plot-t_0) )
+print( ' --> loading               : {:.2f}s'  .format(t_load-t_0) )
+print( ' --> dR computation        : {:.2f}s'  .format(t_dR-t_load) )
+print( ' --> plotting and selection: {:.2f}s'  .format(t_plot-t_dR) )
 
