@@ -10,7 +10,7 @@
 
 ## Running time in ROOT
 
-* total delta       : 18.04s 
+* Total delta       : 18.04s 
 * loading           : 0.00073s
 * histo & selections: 4.32314s 
 * plotting          : 13.7161s
