@@ -84,7 +84,7 @@ t_0 = default_timer()
 
 needed_branches = ['jet_pt','jet_eta','jet_phi','mu_pt' ,'mu_eta' ,'mu_phi','el_pt' ,'el_eta' ,'el_phi' ]
 data_array=[]
-Nfiles=5
+Nfiles=50
 for i in range(0,Nfiles):
     thisdata = pd.DataFrame( root2array('../VectorNtuple_4topSM.root', 'nominal_Loose', branches=needed_branches).view(np.recarray) )
     add_objectCollection(d.Jet     ,['jet_pt','jet_eta','jet_phi'], 'jetCollection'     , thisdata)
